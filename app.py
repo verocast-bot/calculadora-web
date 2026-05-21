@@ -202,23 +202,25 @@ if ejecutar:
         with g_col2:
             st.subheader("🗺️ Trayectoria Realizada")
             if n_vars == 2:
-                history = np.array(history)
+                
                 history_np = np.array(history)
-                x_pts, y_pts = history_np[:, 0], history_np[:, 1]
+                x_pts = history_np[:, 0]
+                y_pts = history_np[:, 1]
 
-               mx = max(abs(max(x_pts)-min(x_pts))*0.6, 2.0)
-               my = max(abs(max(y_pts)-min(y_pts))*0.6, 2.0)
+                mx = max(abs(max(x_pts)-min(x_pts))*0.6, 2.0)
+                my = max(abs(max(y_pts)-min(y_pts))*0.6, 2.0)
                
-               x_grid = np.linspace(min(x_pts)-mx, max(x_pts)+mx, 80)
-               y_grid = np.linspace(min(y_pts)-my, max(y_pts)+my, 80)
+                x_grid = np.linspace(min(x_pts)-mx, max(x_pts)+mx, 80)
+                y_grid = np.linspace(min(y_pts)-my, max(y_pts)+my, 80)
                
-               X, Y = np.meshgrid(x_grid, y_grid)
-               
-               Z = np.zeros_like(X)
-               
-               for r in range(X.shape[0]):
-                   for c in range(X.shape[1]):
-                       Z[r,c] = f([X[r,c], Y[r,c]])
+                X, Y = np.meshgrid(x_grid, y_grid)
+                
+                Z = np.zeros_like(X)
+                
+                for r in range(X.shape[0]):
+                    for c in range(X.shape[1]):
+                        Z[r,c] = f([X[r,c], Y[r,c]])
+                     
                 fig_traj = go.Figure()
 
                 # Curvas de nivel
