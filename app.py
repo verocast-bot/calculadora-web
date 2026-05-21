@@ -278,8 +278,54 @@ if ejecutar:
                 )
 
                 st.plotly_chart(fig_traj, use_container_width=True)
+            elif n_vars == 1:
+
+                history_np = np.array(history).flatten()
+            
+                x_min = min(history_np) - 2
+                x_max = max(history_np) + 2
+            
+                x_curve = np.linspace(x_min, x_max, 400)
+                y_curve = [f([x]) for x in x_curve]
+            
+                fig_1d = go.Figure()
+            
+                # Curva de la función
+                fig_1d.add_trace(go.Scatter(
+                    x=x_curve,
+                    y=y_curve,
+                    mode='lines',
+                    name='f(x)'
+                ))
+            
+                # Puntos iterativos
+                fig_1d.add_trace(go.Scatter(
+                    x=history_np,
+                    y=[f([x]) for x in history_np],
+                    mode='markers+lines',
+                    name='Iteraciones',
+                    text=[
+                        f"""
+                        Iteración: {i}<br>
+                        x = {history_np[i]:.6f}<br>
+                        f(x) = {f([history_np[i]]):.6f}
+                        """
+                        for i in range(len(history_np))
+                    ],
+                    hoverinfo='text'
+                ))
+            
+                fig_1d.update_layout(
+                    title='Trayectoria de Optimización en 1D',
+                    xaxis_title='x',
+                    yaxis_title='f(x)',
+                    height=500
+                )
+            
+                st.plotly_chart(fig_1d, use_container_width=True)
+            
             else:
-                st.info("El gráfico de trayectoria espacial solo está disponible para N=2 variables.")
+                st.info("La visualización gráfica solo está disponible para 1 o 2 variables.")
 
     except Exception as e:
         st.error(f"Ocurrió un error matemático o de sintaxis: {str(e)}")
