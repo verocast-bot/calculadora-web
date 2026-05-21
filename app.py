@@ -9,7 +9,6 @@ Original file is located at
 ##Proyecto Optimizacion
 """
 
-!pip install streamlit sympy
 
 # Commented out IPython magic to ensure Python compatibility.
 # %%writefile app.py
