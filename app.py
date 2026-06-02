@@ -82,17 +82,20 @@ st.title("Plataforma Web de Optimización - Grupo: VMA Optima")
 with st.sidebar:
     st.header("🔧 Datos de Entrada")
 
-    var_names = [f"x{i+1}" for i in range(n_vars)]
     n_vars = st.number_input(
-    "Número de Variables",
-    min_value=1,
-    max_value=50,
-    value=2,
-    step=1
-)
+        "Número de Variables",
+        min_value=1,
+        max_value=50,
+        value=2,
+        step=1
+    )
+
     var_names = [f"x{i+1}" for i in range(n_vars)]
-    metodo = st.selectbox("Método de Optimización", ['Gradiente', 'Gradiente Conjugado (FR)', 'Newton'])
- 
+
+    metodo = st.selectbox(
+        "Método de Optimización",
+        ['Gradiente', 'Gradiente Conjugado (FR)', 'Newton']
+    )
      # Nota: Internamente el código convertirá los "^" a "**" para que funcione como MATLAB
     default_function = " + ".join(
     [f"x{i+1}^2" for i in range(min(n_vars,3))]
@@ -155,20 +158,27 @@ if ejecutar:
             st.error(f"El punto de partida debe tener {n_vars} valores separados por comas.")
             st.stop()
         xk = np.array(x_vals, dtype=float)
-        vars_sym = sp.symbols(" ".join(var_names))
-        if n_vars == 1:
-            vars_sym = (vars_sym,)
+        vars_sym = tuple(
+            sp.symbols(" ".join(var_names))
+            if n_vars > 1
+            else [sp.Symbol("x1")]
+        )
         f_sym = sp.sympify(funcion_str)
         grad_sym = [sp.diff(f_sym, var) for var in vars_sym]
         hess_sym = [[sp.diff(g, var) for var in vars_sym] for g in grad_sym]
 
-        f_num = sp.lambdify([vars_sym], f_sym, "numpy")
-        grad_num = sp.lambdify([vars_sym], grad_sym, "numpy")
-        hess_num = sp.lambdify([vars_sym], hess_sym, "numpy")
-
-        def f(v): return float(f_num(list(v)))
-        def grad(v): return np.array(grad_num(list(v)), dtype=float)
-        def hess(v): return np.array(hess_num(list(v)), dtype=float)
+        f_num = sp.lambdify(vars_sym, f_sym, "numpy")
+        grad_num = sp.lambdify(vars_sym, grad_sym, "numpy")
+        hess_num = sp.lambdify(vars_sym, hess_sym, "numpy")
+        
+        def f(v):
+            return float(f_num(*v))
+        
+        def grad(v):
+            return np.array(grad_num(*v), dtype=float)
+        
+        def hess(v):
+            return np.array(hess_num(*v), dtype=float)
 
         history = [xk.copy()]
         f_history = [f(xk)]
@@ -194,6 +204,7 @@ if ejecutar:
                 dk = -g
             elif metodo == 'Newton':
                 H = hess(xk)
+                H = np.atleast_2d(H)
                 if np.linalg.cond(H) > 1e10 or np.isnan(H).any():
                     H += 1e-2 * np.eye(n_vars)
                 try:
