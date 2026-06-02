@@ -82,14 +82,37 @@ st.title("Plataforma Web de Optimización - Grupo: VMA Optima")
 with st.sidebar:
     st.header("🔧 Datos de Entrada")
 
-    n_vars = st.number_input("Número de Variables", min_value=1, max_value=3, value=2)
+    n_vars = st.number_input(
+    "Número de Variables",
+    min_value=1,
+    max_value=50,
+    value=2,
+    step=1
+)
     metodo = st.selectbox("Método de Optimización", ['Gradiente', 'Gradiente Conjugado (FR)', 'Newton'])
  
      # Nota: Internamente el código convertirá los "^" a "**" para que funcione como MATLAB
-    funcion_str_input = st.text_input("Función Objetivo f(x,y,z)", value="2*x^2 - 4*x*y + y^4 + 5*y^2 - 10*y")
-    st.caption("Use: x, y, z (Ej: x^2 + y^2)")
+    default_function = " + ".join(
+    [f"x{i+1}^2" for i in range(min(n_vars,3))]
+    default_function = " + ".join(
+    [f"x{i+1}^2" for i in range(min(n_vars,3))]
+    )
+    
+    funcion_str_input = st.text_input(
+        "Función Objetivo",
+        value=default_function
+    )
+    
+    st.caption(
+        f"Variables disponibles: {', '.join(var_names)}"
+    )
 
-    x0_str = st.text_input("Punto de Partida (x_0)", value="0, 0")
+    default_x0 = ", ".join(["0"] * n_vars)
+
+    x0_str = st.text_input(
+        "Punto de Partida (x₀)",
+        value=default_x0
+    )
     max_iter = st.number_input("Número de Iteraciones", min_value=1, value=100)
     tol = st.number_input("Tolerancia de Convergencia", value=1e-6, format="%.1e")
  
@@ -133,7 +156,8 @@ if ejecutar:
             st.stop()
         xk = np.array(x_vals, dtype=float)
 
-        vars_sym = sp.symbols('x y z')[:n_vars]
+        var_names = [f"x{i+1}" for i in range(n_vars)]
+        vars_sym = sp.symbols(" ".join(var_names))
         f_sym = sp.sympify(funcion_str)
         grad_sym = [sp.diff(f_sym, var) for var in vars_sym]
         hess_sym = [[sp.diff(g, var) for var in vars_sym] for g in grad_sym]
