@@ -76,6 +76,26 @@ p, label, div, span {
 
 </style>
 """, unsafe_allow_html=True)
+st.markdown("""
+<style>
+
+/* Texto del SelectBox */
+.stSelectbox div[data-baseweb="select"] * {
+    color: black !important;
+}
+
+/* Menú desplegable */
+div[role="listbox"] * {
+    color: black !important;
+}
+
+/* Opciones al abrir el desplegable */
+div[role="option"] {
+    color: black !important;
+}
+
+</style>
+""", unsafe_allow_html=True)
 st.title("Plataforma Web de Optimización - Grupo: VMA Optima")
  
 # --- PANEL LATERAL (DATOS DE ENTRADA) ---
