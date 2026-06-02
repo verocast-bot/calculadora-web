@@ -25,7 +25,7 @@ h1, h2, h3 {
 }
 
 /* Texto normal */
-p, label, div, span {
+p, label {
     color: white !important;
 }
 
@@ -74,23 +74,23 @@ p, label, div, span {
     border-radius: 10px;
 }
 
-</style>
-""", unsafe_allow_html=True)
-st.markdown("""
-<style>
+/* Selectbox cerrado */
+[data-baseweb="select"] {
+    color: black !important;
+}
 
-/* Texto del SelectBox */
-.stSelectbox div[data-baseweb="select"] * {
+/* Texto seleccionado */
+[data-baseweb="select"] span {
     color: black !important;
 }
 
 /* Menú desplegable */
-div[role="listbox"] * {
-    color: black !important;
+[role="listbox"] {
+    background-color: white !important;
 }
 
-/* Opciones al abrir el desplegable */
-div[role="option"] {
+/* Opciones */
+[role="option"] {
     color: black !important;
 }
 
