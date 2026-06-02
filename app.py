@@ -94,8 +94,6 @@ with st.sidebar:
      # Nota: Internamente el código convertirá los "^" a "**" para que funcione como MATLAB
     default_function = " + ".join(
     [f"x{i+1}^2" for i in range(min(n_vars,3))]
-    default_function = " + ".join(
-    [f"x{i+1}^2" for i in range(min(n_vars,3))]
     )
     
     funcion_str_input = st.text_input(
