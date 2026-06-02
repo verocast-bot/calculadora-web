@@ -11,7 +11,71 @@ import plotly.graph_objects as go
  # PLATAFORMA DE OPTIMIZACIÓN WEB - GRUPO VMA OPTIMA (STREAMLIT)
  # =========================================================================
  
-st.set_page_config(page_title="Plataforma de Optimización - VMA Optima", layout="wide")
+st.markdown("""
+<style>
+
+.stApp {
+    background-color: #081c3a;
+    color: white;
+}
+
+/* Títulos */
+h1, h2, h3 {
+    color: #d4af37 !important;
+}
+
+/* Texto normal */
+p, label, div, span {
+    color: white !important;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: #06152d;
+}
+
+/* Inputs */
+.stTextInput input,
+.stNumberInput input {
+    background-color: #10284d;
+    color: white !important;
+    border: 1px solid #d4af37;
+}
+
+/* Selectbox */
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #10284d;
+    color: white;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    background-color: #10284d;
+}
+
+/* Botón principal */
+.stButton button {
+    background-color: #d4af37;
+    color: #081c3a;
+    font-weight: bold;
+    border-radius: 10px;
+    border: none;
+}
+
+.stButton button:hover {
+    background-color: #f0c94a;
+}
+
+/* Métricas */
+[data-testid="metric-container"] {
+    background-color: #10284d;
+    border: 1px solid #d4af37;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+</style>
+""", unsafe_allow_html=True)
 st.title("Plataforma Web de Optimización - Grupo: VMA Optima")
  
 # --- PANEL LATERAL (DATOS DE ENTRADA) ---
@@ -35,8 +99,22 @@ with st.sidebar:
  
     c1 = st.number_input("Parámetro Armijo (β)", value=0.1)
 
-    disabled_c2 = (tipo_busqueda == 'Solo Armijo')
-    c2 = st.number_input("Parámetro Curvatura (σ)", value=0.9, disabled=disabled_c2)
+    c2 = st.number_input(
+    "Parámetro Curvatura (σ)",
+    min_value=0.01,
+    max_value=0.999,
+    value=0.90,
+    step=0.01,
+    help="""
+    Condición de Wolfe.
+    Valores comunes:
+    0.1 = muy estricto
+    0.5 = moderado
+    0.9 = estándar
+    0.99 = muy permisivo
+    """,
+    disabled=(tipo_busqueda == 'Solo Armijo')
+)
 
     disabled_rho = (tipo_busqueda == 'Wolfe Completo sin Backtracking')
     rho = st.number_input("Contracción Backtracking (ρ)", value=0.5, disabled=disabled_rho)
