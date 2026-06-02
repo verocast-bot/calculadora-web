@@ -82,6 +82,7 @@ st.title("Plataforma Web de Optimización - Grupo: VMA Optima")
 with st.sidebar:
     st.header("🔧 Datos de Entrada")
 
+    var_names = [f"x{i+1}" for i in range(n_vars)]
     n_vars = st.number_input(
     "Número de Variables",
     min_value=1,
@@ -89,6 +90,7 @@ with st.sidebar:
     value=2,
     step=1
 )
+    var_names = [f"x{i+1}" for i in range(n_vars)]
     metodo = st.selectbox("Método de Optimización", ['Gradiente', 'Gradiente Conjugado (FR)', 'Newton'])
  
      # Nota: Internamente el código convertirá los "^" a "**" para que funcione como MATLAB
@@ -153,9 +155,9 @@ if ejecutar:
             st.error(f"El punto de partida debe tener {n_vars} valores separados por comas.")
             st.stop()
         xk = np.array(x_vals, dtype=float)
-
-        var_names = [f"x{i+1}" for i in range(n_vars)]
         vars_sym = sp.symbols(" ".join(var_names))
+        if n_vars == 1:
+            vars_sym = (vars_sym,)
         f_sym = sp.sympify(funcion_str)
         grad_sym = [sp.diff(f_sym, var) for var in vars_sym]
         hess_sym = [[sp.diff(g, var) for var in vars_sym] for g in grad_sym]
