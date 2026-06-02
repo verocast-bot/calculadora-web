@@ -279,6 +279,11 @@ if ejecutar:
             history.append(xk.copy())
             f_history.append(f(xk))
             err_history.append(np.linalg.norm(grad(xk)))
+         
+            st.write("Punto inicial:", xk)
+            st.write("f(x0):", f(xk))
+            st.write("grad(x0):", grad(xk))
+            st.write("norma gradiente:", np.linalg.norm(grad(xk)))
 
         st.success(f"**Criterio de Parada Alcanzado:** {status}")
 
@@ -462,4 +467,6 @@ if ejecutar:
 
     except Exception as e:
         st.error(f"Ocurrió un error matemático o de sintaxis: {str(e)}")
+
+
 
