@@ -279,8 +279,6 @@ if ejecutar:
             history.append(xk.copy())
             f_history.append(f(xk))
             err_history.append(np.linalg.norm(grad(xk)))
-         
-            st.write("x0_str =", x0_str)
 
         st.success(f"**Criterio de Parada Alcanzado:** {status}")
 
