@@ -280,10 +280,7 @@ if ejecutar:
             f_history.append(f(xk))
             err_history.append(np.linalg.norm(grad(xk)))
          
-            st.write("Punto inicial:", xk)
-            st.write("f(x0):", f(xk))
-            st.write("grad(x0):", grad(xk))
-            st.write("norma gradiente:", np.linalg.norm(grad(xk)))
+            sst.write("x0_str =", x0_str)
 
         st.success(f"**Criterio de Parada Alcanzado:** {status}")
 
