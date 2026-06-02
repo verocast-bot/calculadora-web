@@ -37,9 +37,9 @@ p, label {
 /* Inputs */
 .stTextInput input,
 .stNumberInput input {
-    background-color: #10284d;
-    color: white !important;
-    border: 1px solid #d4af37;
+    background-color: white !important;
+    color: black !important;
+    border: 2px solid #d4af37 !important;
 }
 
 /* Selectbox */
@@ -76,7 +76,7 @@ p, label {
 
 /* Selectbox cerrado */
 [data-baseweb="select"] {
-    color: black !important;
+    color: white !important;
 }
 
 /* Texto seleccionado */
