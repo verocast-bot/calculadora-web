@@ -339,21 +339,17 @@ with tab_gradiente:
         var_names_g = [f"x{i+1}" for i in range(n_vars_g)]
         default_function_g = " + ".join([f"x{i+1}^2" for i in range(min(n_vars_g,3))])
         col1, col2 = st.columns([5, 1])
-        
         with col1:
-            funcion_obj = st.text_input(
+            funcion_str_g = st.text_input(
                 "Función Objetivo",
-                placeholder="Ejemplo: x1**2 + 3*x2 - x3"
+                value=default_function_g,
+                key="func_g"
             )
-        
         with col2:
-            with st.expander("ℹ️"):
-                st.write("""
-                **Formato de las variables:**
-        
-                - Utilice: `x1`, `x2`, `x3`, ...
-                - Ejemplo: `x1**2 + 3*x2 - x3`
-                """)
+            st.info(
+                "Variables: x1, x2, x3, ...\n\n"
+                "Ejemplo: x1**2 + 3*x2 - x3"
+            )
         st.caption(f"Variables disponibles: {', '.join(var_names_g)}")
         
         default_x0_g = ", ".join(["0"] * n_vars_g)
@@ -400,21 +396,19 @@ with tab_conjugado:
         var_names_cg = [f"x{i+1}" for i in range(n_vars_cg)]
         default_function_cg = " + ".join([f"x{i+1}^2" for i in range(min(n_vars_cg,3))])
         col1, col2 = st.columns([5, 1])
-        
+ 
         with col1:
-            funcion_obj = st.text_input(
+            funcion_str_cg = st.text_input(
                 "Función Objetivo",
-                placeholder="Ejemplo: x1**2 + 3*x2 - x3"
+                value=default_function_cg,
+                key="func_cg"
             )
         
         with col2:
-            with st.expander("ℹ️"):
-                st.write("""
-                **Formato de las variables:**
-        
-                - Utilice: `x1`, `x2`, `x3`, ...
-                - Ejemplo: `x1**2 + 3*x2 - x3`
-                """)
+            st.info(
+                "Variables: x1, x2, x3, ...\n\n"
+                "Ejemplo: x1**2 + 3*x2 - x3"
+            )
         st.caption(f"Variables disponibles: {', '.join(var_names_cg)}")
         
         default_x0_cg = ", ".join(["0"] * n_vars_cg)
@@ -450,19 +444,17 @@ with tab_newton:
         col1, col2 = st.columns([5, 1])
 
         with col1:
-            funcion_obj = st.text_input(
+            funcion_str_nw = st.text_input(
                 "Función Objetivo",
-                placeholder="Ejemplo: x1**2 + 3*x2 - x3"
+                value=default_function_nw,
+                key="func_nw"
             )
         
         with col2:
-            with st.expander("ℹ️"):
-                st.write("""
-                **Formato de las variables:**
-        
-                - Utilice: `x1`, `x2`, `x3`, ...
-                - Ejemplo: `x1**2 + 3*x2 - x3`
-                """)
+            st.info(
+                "Variables: x1, x2, x3, ...\n\n"
+                "Ejemplo: x1**2 + 3*x2 - x3"
+            )
         st.caption(f"Variables disponibles: {', '.join(var_names_nw)}")
         
         default_x0_nw = ", ".join(["0"] * n_vars_nw)
